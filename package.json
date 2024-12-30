@@ -1,0 +1,35 @@
+{
+  "name": "waydate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules /home/bozo/node_modules/jest/bin/jest.js",
+    "lint": "eslint ./date.js ./assert.js ./year.js"
+  },
+  "keywords": [],
+  "author": "William Shaffer",
+  "license": "MIT",
+  "description": "Updated WayDate code in Javascript",
+  "jest": {
+    "verbose": true,
+    "transform": {}
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.5.0",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "npm": "^10.8.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waysys/js-waydate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/waysys/js-waydate/issues"
+  },
+  "homepage": "https://github.com/waysys/js-waydate#readme"
+}
