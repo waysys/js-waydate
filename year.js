@@ -1,5 +1,5 @@
 /*
- * Year - this class contains 
+ * Year - Year class
  *
  * Copyright (c) 2024 William Shaffer
  *
@@ -12,18 +12,29 @@ import assert from './assert.js';
 /** 
  * Year contains constants and functions that define a year in the date. 
  */
-class Year {
+export default class Year {
 
     // ------------------------------------------------------------------------
     // Constants
     // ------------------------------------------------------------------------
 
-    // MaxYear is the largest year handled by WayDate.
+    /**
+     * MaxYear is the largest year handled by WayDate.
+     * 
+     * @constant
+     * @type {number}
+     * @default
+     */
     static MaxYear = 3999;
 
-    /* MinYear is the minimum year handled by WayDate. Since the Gregorian
-    calendar did not begin until 1582, there seems little point in using this
-    class for dates prior to 1582. 1601 is a convenient year for the epoch.  
+    /** 
+     * MinYear is the minimum year handled by WayDate. Since the Gregorian
+     * calendar did not begin until 1582, there seems little point in using this
+     * class for dates prior to 1582. 1601 is a convenient year for the epoch. 
+     * 
+     * @constant
+     * @type {number}
+     * @default
     */
     static MinYear = 1601;
 
@@ -38,12 +49,12 @@ class Year {
      * @returns {boolean} true if year is between MinYear and MaxYear inclusive
      */
     static isYear(year) {
-        let result = true 
+        let result = true
         if (typeof year !== "number") {
             result = false;
         } else if (year < Year.MinYear || year > Year.MaxYear) {
             result = false
-        } 
+        }
         return result
     }
 
@@ -76,7 +87,7 @@ class Year {
      */
     static daysInYear(year) {
         assert(this.isYear(year), "Invalid year: " + year);
-        let days = 365; 
+        let days = 365;
         if (this.isLeapYear(year)) {
             days = 366;
         }
