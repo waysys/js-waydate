@@ -35,46 +35,45 @@ export default class Month {
      * Days in Month for non-leap year.
      * 
      * @constant
-     * @type {Map}
+     * @type {Array}
      */
-    static daysPerMonth = new Map(
+    static daysPerMonth = 
         [
-            [this.JANUARY, 31],
-            [this.FEBRUARY, 28],
-            [this.MARCH, 31],
-            [this.APRIL, 30],
-            [this.MAY, 31],
-            [this.JUNE, 30],
-            [this.JULY, 31],
-            [this.AUGUST, 31],
-            [this.SEPTEMBER, 30],
-            [this.OCTOBER, 31],
-            [this.NOVEMBER, 30],
-            [this.DECEMBER, 31]
-        ]
-    );
+            31,
+            28,
+            31,
+            30,
+            31,
+            30,
+            31,
+            31,
+            30,
+            31,
+            30,
+            31,
+        ];
 
     /**
      * Month abbreviations
      * 
      * @constant
-     * @type {Map}
+     * @type {Array}
      * 
      */
-    static monthAbbrev = new Map([
-        [this.JANUARY, "Jan"],
-        [this.FEBRUARY, "Feb"],
-        [this.MARCH, "Mar"],
-        [this.APRIL, "Apr"],
-        [this.MAY, "May"],
-        [this.JUNE, "Jun"],
-        [this.JULY, "Jul"],
-        [this.AUGUST, "Aug"],
-        [this.SEPTEMBER, "Sep"],
-        [this.OCTOBER, "Oct"],
-        [this.NOVEMBER, "Nov"],
-        [this.DECEMBER, "Dec"]
-    ])
+    static monthAbbrev = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ];
 
     // ------------------------------------------------------------------------
     // Static Methods
@@ -87,7 +86,8 @@ export default class Month {
      * @returns {boolean} true if month is a valid designation of a month
      */
     static isMonth(month) {
-        let result = this.JANUARY <= month && month <= this.DECEMBER;
+        let result = Number.isInteger(month);
+        result = result && (this.JANUARY <= month && month <= this.DECEMBER);
         return result
     }
 
@@ -101,8 +101,8 @@ export default class Month {
     static daysInMonth(month, year) {
         assert(this.isMonth(month), "Invalid month: " + month)
         assert(Year.isYear(year), "Invalid year: " + year)
-        
-        let days = this.daysPerMonth.get(month);
+
+        let days = this.daysPerMonth[month - 1];
         if (Year.isLeapYear(year) && (month === this.FEBRUARY)) {
             days++;
         }
@@ -119,7 +119,10 @@ export default class Month {
      *  including the specified month.
      */
     static daysInMonths(month, year) {
-        let days = Math.floor((367 * month - 362)/12);
+        assert(this.isMonth(month), "Invalid month: " + month)
+        assert(Year.isYear(year), "Invalid year: " + year)
+
+        let days = Math.floor((367 * month - 362) / 12);
         if ((month > this.FEBRUARY) && Year.isLeapYear(year)) {
             days--;
         } else if (month > this.FEBRUARY) {
@@ -134,8 +137,53 @@ export default class Month {
      * @param {number} month the specified month
      * @returns {string} the three-letter abbreviation for the month
      */
-    static monthToString(month) {
-        let abbrev = this.monthAbbrev[month]
+    static toString(month) {
+        assert(this.isMonth(month), "Invalid month: " + month)
+
+        let abbrev = this.monthAbbrev[month - 1]
         return abbrev
+    }
+
+    /**
+     * before returns true if the first month is before the second month.
+     * 
+     * @param {number} month1 the first month
+     * @param {number} month2 the second month
+     * @returns {boolean} true if month1 < month2
+     */
+    static before(month1, month2) {
+        return month1 < month2
+    }
+
+    /**
+     * after returns true if the first month is after the second month.
+     * 
+     * @param {number} month1 the first month
+     * @param {number} month2 the second month
+     * @returns {boolean} true if month1 > month2
+     */
+    static after(month1, month2) {
+        return month1 > month2
+    }
+
+    /**
+     * next returns the next month after the specified month.  If the 
+     * specified month is December, the method throws an exception.
+     * 
+     * @param {number} month the month to be advanced
+     * @returns {number} the month after the specified month
+     */
+    static next(month) {
+        assert(this.before(month, this.DECEMBER), "Cannot invoke next on DECEMBER");
+        return month + 1;
+    }
+
+    /**
+     * prior returns the month before the specified month.  If the specified month
+     * is January, the method throws an exception.
+     */
+    static prior(month) {
+        assert(this.after(month, this.JANUARY), "Cannot invoke prior on JANUARY");
+        return month - 1;
     }
 }

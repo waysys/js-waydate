@@ -49,13 +49,13 @@ export default class Year {
      * @returns {boolean} true if year is between MinYear and MaxYear inclusive
      */
     static isYear(year) {
-        let result = true
-        if (typeof year !== "number") {
+        let result = true;
+        if (!Number.isInteger(year)) {
             result = false;
         } else if (year < Year.MinYear || year > Year.MaxYear) {
-            result = false
+            result = false;
         }
-        return result
+        return result;
     }
 
     /**
