@@ -11,6 +11,21 @@ import { Year } from "../year.js"
 
 // ----------------------------------------------------------------------------
 
+/**
+ * totalDays computes the number of days in the years from MinYear up to but
+ * not including the specified year.
+ * 
+ * @param {number} year the specified year
+ * @returns {number} the number of days in all years prior to year
+ */
+function totalDays(year) {
+    let total = 0;
+    for (let y = Year.MinYear; y < year; y++) {
+        total += Year.daysInYear(y)
+    }
+    return total
+}
+
 describe('Year', () => {
 
     test('isYear valid low', () => {
@@ -89,6 +104,14 @@ describe('Year', () => {
         const expectedResult = 365;
         expect(actualResult).toEqual(expectedResult);       
     });
+
+    test('daysInPastYears', ()=> {
+        for (let year = Year.MinYear; year <= Year.MaxYear; year++) {
+            let expectedDays = totalDays(year)
+            let actualDays = Year.daysInPastYears(year)
+            expect(actualDays).toEqual(expectedDays)
+        }
+    })
 
 })
 

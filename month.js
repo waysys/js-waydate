@@ -11,7 +11,8 @@ import assert from './assert.js';
 import Year from './year.js';
 
 /**
- * Month contains constants constants and methods related to months.
+ * 
+ * @classdesc Month contains constants constants and methods related to months.
  */
 export default class Month {
     /**
@@ -112,6 +113,10 @@ export default class Month {
     /**
      * daysInMonths computes total days in all the months up to 
      * the specified months.
+     * 
+     * -- This algorithm is from:
+     * -- Edward M. Reingold and Nachum Dershowitz, Calendrical Calculations: The
+     * -- Millennium Edition (Cambridge, UK: Cambridge University Press, 2001) 
      * 
      * @param {number} month the specified month
      * @param {number} year the year containing the month

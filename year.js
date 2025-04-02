@@ -10,7 +10,7 @@ export { Year };
 import assert from './assert.js';
 
 /** 
- * Year contains constants and functions that define a year in the date. 
+ * @classdesc Year contains constants and functions that define a year in the date. 
  */
 export default class Year {
 
@@ -92,5 +92,34 @@ export default class Year {
             days = 366;
         }
         return days;
+    }
+
+    /**
+     * daysInPastYears computes the number of days in the years before 
+     * the specified years.
+     * 
+     * -- This alorithm is from:
+     * -- Edward M. Reingold and Nachum Dershowitz, Calendrical
+     * -- Calculations: The Millennium Edition (Cambridge, UK: Cambridge University Press, 2001) p. 51
+     * 
+     * @param {number} year the specified year
+     * @returns {number} returns the number of days in all the years prior to year
+     */
+    static daysInPastYears(year) {
+        assert(this.isYear(year), "Invalid year: " + year);
+
+        const y = year - this.MinYear;
+
+        const days = 365 * y
+            // days in prior years if all years were 365 days
+            + Math.floor(y / 4)
+            // additional days in leap years if all years divisible 
+            // by 4 were leap years
+            - Math.floor(y / 100)
+            // subtracting years divisable by 100 that were not leap 
+            // years if all these were not leap years
+            + Math.floor(y / 400)
+            // additional days divisable by 100 that are in fact leap years
+        return days
     }
 }
